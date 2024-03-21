@@ -19,15 +19,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/crear", (req, res) => {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1;
+    const day = new Date().getDate();
+    const fecha = `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month }/${year}`;
   const { archivo, contenido } = req.query;
-  fs.writeFile(`${archivo}.txt`, `${contenido}`, () => {
+  fs.writeFile(`${archivo}`, `${fecha}\n <br> ${contenido}`, () => {
     res.send("Archivo creado con éxito!");
   });
 });
 
 app.get("/leer", (req, res) => {
   const { archivo } = req.query;
-  fs.readFile(`${archivo}.txt`, "UTF8", (err, data) => {
+  fs.readFile(`${archivo}`, "UTF8", (err, data) => {
     res.send(data);
   });
 });
@@ -35,7 +39,7 @@ app.get("/leer", (req, res) => {
 app.get("/renombrar", (req, res) => {
   const { nombre } = req.query;
   const { nuevoNombre } = req.query;
-  fs.rename(`${nombre}.txt`, `${nuevoNombre}.txt`, (err, data) => {
+  fs.rename(`${nombre}`, `${nuevoNombre}`, (err, data) => {
     res.send(`Archivo ${nombre}.txt renombrado por ${nuevoNombre}`);
   });
 });
@@ -43,7 +47,22 @@ app.get("/renombrar", (req, res) => {
 //eliminar
 app.get("/eliminar", (req, res) => { 
     const{ archivo } = req.query
-    fs.unlink(`${archivo}.txt`, (err, data) => { 
+    fs.unlink(`${archivo}`, (err, data) => { 
         res.send(`Archivo ${archivo} eliminado con éxito`) 
     }) 
 })
+
+//fecha (fórmula de Waldo)
+// function obtenerFechaFormateada() {
+//     const fecha = new Date();
+  
+//     const dia = String(fecha.getDate()).padStart(2, "0");
+//     const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+//     const year = fecha.getFullYear();
+  
+//     const fechaFormateada = `${dia}/${mes}/${year}`;
+  
+//     return fechaFormateada;
+//   }
+
+//o
