@@ -25,7 +25,7 @@ app.get("/crear", (req, res) => {
     const fecha = `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month }/${year}`;
   const { archivo, contenido } = req.query;
   fs.writeFile(`${archivo}`, `${fecha}\n <br> ${contenido}`, () => {
-    res.send("Archivo creado con éxito!");
+    res.send(`¡Archivo ${archivo} creado con éxito!`);
   });
 });
 
@@ -40,7 +40,7 @@ app.get("/renombrar", (req, res) => {
   const { nombre } = req.query;
   const { nuevoNombre } = req.query;
   fs.rename(`${nombre}`, `${nuevoNombre}`, (err, data) => {
-    res.send(`Archivo ${nombre}.txt renombrado por ${nuevoNombre}`);
+    res.send(`Archivo ${nombre}renombrado a ${nuevoNombre}`);
   });
 });
 
